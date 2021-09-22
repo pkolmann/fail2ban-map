@@ -1,0 +1,12 @@
+[sshd]
+enabled = true
+filter = sshd
+logpath = /var/log/auth.log
+bantime  = 600
+findtime  = 1800
+maxretry = 10
+action   = iptables-multiport[name=ssh, port="ssh"]
+           sendmail-whois-lines[name=ssh, logpath=/var/log/auth.log, sendername="%(sendername)s", dest="%(destemail)s", sender="%(sender)s"]
+           f2b-geoip[servername=NAME, serverpassword=PASS, service=sshd, URL=destinationURL, agent="%(fail2ban_agent)s"]
+
+

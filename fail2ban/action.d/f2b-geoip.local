@@ -1,0 +1,15 @@
+# Fail2Ban configuration file
+#
+# Author: Philipp Kolmann
+# forked from /etc/fail2ban/action.d/blocklist_de.conf
+#
+
+[Definition]
+actionstart = 
+actionstop =
+actioncheck =
+
+actionban = curl --fail --user '<servername>:<serverpassword>' --data 'service=<service>' --data 'ip=<ip>' --user-agent "<agent>" <url>
+
+actionunban =
+
