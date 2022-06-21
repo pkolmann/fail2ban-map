@@ -1,6 +1,9 @@
 #!/usr/bin/php
 <?php
 
+$appDir = dirname(__FILE__);
+require_once($appDir.'/config.php');
+
 print "User / Servername: ";
 $user = trim(fgets(STDIN));
 
@@ -32,8 +35,26 @@ while ($view < 0 or $view > 1) {
 }
 
 $query = <<<SQL
-    INSERT INTO fail2ban.user (user, hash, upload, view) 
-    VALUES ($user, $password, $upload, $view);
+    INSERT INTO user (user, hash, upload, view) 
+    VALUES ('$user', '$password', $upload, $view);
 SQL;
 
 print "$query\n\n";
+
+// Create connection
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_DB);
+
+// Check connection
+if ($conn->connect_error) {
+    print 'MySQL connection failed: ' . $conn->connect_error . "\n\n";
+    die();
+}
+
+$result = $conn->query($query);
+if (!$result) {
+    print 'MySQL INSERT error message: ' . $conn->error . "\n" . $query . "\n\n");
+    die();
+}
+
+print "User added!\n\n";
+
