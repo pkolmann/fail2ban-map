@@ -7,6 +7,8 @@ $user = trim(fgets(STDIN));
 print "Password: ";
 system('stty -echo');
 $password = password_hash(trim(fgets(STDIN)), PASSWORD_BCRYPT);
+// Alternative: htpasswd -nB 
+
 system('stty echo');
 // add a new line since the users CR didn't echo
 print "\n";
@@ -22,7 +24,7 @@ while ($upload < 0 or $upload > 1) {
 
 $view = -1;
 while ($view < 0 or $view > 1) {
-    print "Upload (1 for yes, 0 for no): ";
+    print "View (1 for yes, 0 for no): ";
     $input = trim(fgets(STDIN));
     if (is_numeric($input)) {
         $view = intval($input);
